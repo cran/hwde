@@ -11,18 +11,12 @@
 \format{
   This data frame contains the following columns:
   \describe{
-    \item{seedshape}{a factor with levels}
-    \item{seedshape}{\code{AA} }
-    \item{seedshape}{\code{Aa} }
-    \item{seedshape}{\code{aa} }
-    \item{cotylcolor}{a factor with levels}
-    \item{cotylcolor}{\code{BB} }
-    \item{cotylcolor}{\code{Bb} }
-    \item{cotylcolor}{\code{bb} }
-    \item{coatcolor}{a factor with levels}
-    \item{coatcolor}{\code{CC} }
-    \item{coatcolor}{\code{Cc} }
-    \item{coatcolor}{\code{cc} }
+    \item{seedshape}{Factor with levels:
+    \code{AA}, \code{Aa} and \code{aa}}
+    \item{cotylcolor}{Factor with levels: 
+    \code{BB}, \code{Bb} and \code{bb}}
+    \item{coatcolor}{Factor with levels:
+    \code{CC}, \code{Cc} and \code{cc}}
     \item{Observed}{a numeric vector that holds the frequencies.}
   }
 }
