@@ -11,17 +11,12 @@ Xavante Indian and Irish populations respectively
 \format{
   This data frame contains the following columns:
   \describe{
-    \item{Population}{a factor with levels}
-    \item{Population}{\code{Indian} }
-    \item{Population}{\code{Irish} }
-    \item{locus1}{a factor with levels}
-    \item{locus1}{\code{MM} }
-    \item{locus1}{\code{MN} }
-    \item{locus1}{\code{NN} }
-    \item{locus2}{a factor with levels}
-    \item{locus2}{\code{SS} }
-    \item{locus2}{\code{Ss} }
-    \item{locus2}{\code{ss} }
+    \item{Population}{Factor with levels:
+    \code{Indian} and \code{Irish} }
+    \item{locus1}{Factor with levels:
+    \code{MM}, \code{MN} and \code{NN}}
+    \item{locus2}{Factor with levels:
+    \code{SS}, \code{Ss} and \code{ss}}
     \item{Observed}{a numeric vector giving the frequency for each
     category of the tale}
   }
