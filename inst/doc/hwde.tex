@@ -7,17 +7,18 @@
 \usepackage{a4wide}
 \newcommand{\keywords}[1]{\addvspace{\baselineskip}\noindent{{\bf Keywords.} #1}}
 
-\usepackage{/usr/local/lib/R/share/texmf/Sweave}
+\usepackage{/Library/Frameworks/R.framework/Resources/share/texmf/Sweave}
 \begin{document}
 \author{John Maindonald\\
-{\small Centre for Bioinformation Science, Australian National University, Canberra, Australia}}
+{\small Centre for Mathematics and Its Applications, Australian National 
+University, Canberra, Australia}}
 \date{}
 \maketitle
 
 \keywords{population genetics, Hardy-Weinberg, genotype, allele,
 genotypic disequilibrium}
 
-\section*{Introduction}
+\section{Introduction}
 
 In a diploid, sexually reproducing species, at a locus where there are
 two alleles $A$ and $a$, the possible genotypes are $AA$, $Aa$ and
@@ -25,12 +26,12 @@ $aa$.  In a population of size $N$, with $p$ the frequency of the A
 allele and $q$ the frequency of the a allele, the expected numbers
 under Hardy-Weinberg equilibrium are $NP_{AA} = Np^2$ for the $AA$
 genotype, $NP_{Aa} = 2Npq$ for the $Aa$ genotype, and $NP_{aa} = Nq^2$
-for the $aa$ genotype.  Writing $m$ = $\log(Np^2)$ and $\log(p/q) =
+for the $aa$ genotype.  Writing $m$ = $\log(Np^2)$ and $\log(q/p) =
 m_a$, the logarithms of the frequencies may be written:
 \begin{eqnarray}
-\log(Np²)  =&  m \\
-\log(2Npq) =&  m + \log(2) + m_a\\
-\log(Nq²)  =&  m + 2 m_a
+\log(Np^{2})  &=&  m \\
+\log(2Npq) &=&  m + \log(2) + m_a\\
+\log(Nq^{2})  &=&  m + 2 m_a
 \end{eqnarray}
 Thus the model is loglinear, and can be fitted as a generalized linear
 model with poisson error and offset $\log(2)$ for the heterozygote.
@@ -48,7 +49,7 @@ Call:
 glm(formula = obs ~ ma, family = poisson, offset = oset)
 
 Deviance Residuals: 
-      1        2        3  
+     AA       Aa       aa  
  0.3364  -0.8854   1.0708  
 
 Coefficients:
@@ -83,25 +84,60 @@ Now call the function.
 \end{Sinput}
 \begin{Soutput}
 [1] "Analysis of Deviance Table"
-  Resid. Df Resid. Dev Df Deviance
-1         2    149.353            
-2         1      2.044  1  147.309
-3         0  7.327e-15  1    2.044
+    Resid. Df Resid. Dev Df Deviance
+1           2    149.353            
++a          1      2.044  1  147.309
++aa         0  8.216e-15  1    2.044
 \end{Soutput}
 \end{Schunk}
-We leave till later detailed information on the use of \texttt{hwde()},
-including details on how to obtain fitted values, residuals and 
-parameter estimates. 
 The disequilibrium term has the form
-\[ m_{aa} = \log \frac{4 P_{AA} P_{aa}}{P_{Aa}²}
+\[ m_{aa} = \log \frac{4 P_{AA} P_{aa}}{P_{Aa}^²}
 \]
 Notice that the parameters $m_a$ and $m_{aa}$ have been abbreviated,
-in the computer output, to $a$ and $aa$ respectively.
+in the computer output, to $a$ and $aa$ respectively. The parameter
+$m$ models the reference or baseline level, and is estimated by the
+intercept term.
+
+To obtain estimates of parameters, including the disequilibrium parameter $m_{aa}$,
+one can to the following:
+\begin{Schunk}
+\begin{Sinput}
+> data.df <- hwde(data = hwdat)$data.df
+\end{Sinput}
+\begin{Soutput}
+[1] "Analysis of Deviance Table"
+    Resid. Df Resid. Dev Df Deviance
+1           2    149.353            
++a          1      2.044  1  147.309
++aa         0  8.216e-15  1    2.044
+\end{Soutput}
+\begin{Sinput}
+> names(data.df)
+\end{Sinput}
+\begin{Soutput}
+[1] "obs"  "data" "oset" "a"    "aa"  
+\end{Soutput}
+\begin{Sinput}
+> summary(glm(obs ~ a + aa, offset = oset, family = poisson, data = data.df))$coef
+\end{Sinput}
+\begin{Soutput}
+             Estimate Std. Error  z value     Pr(>|z|)
+(Intercept) 1.8332133  0.2425356 7.558532 4.076429e-14
+a           0.5234955  0.2676640 1.955793 5.048954e-02
+aa          1.1102283  0.3419186 3.247055 1.166060e-03
+\end{Soutput}
+\end{Schunk}
+Note again that the intercept estimates $m$, and that $aa$ is the 
+
+We leave till later detailed information on the use of \texttt{hwde()},
+including details on how to obtain fitted values and residuals. 
+
+\subsection{Several different populations}
 
 If there several different populations, there must be a parameter
 (by default assumed to have the name \texttt{Population}),
 that accounts for different population sizes.  In the code, this
-translates into a main effect \texttt{gp} in the log-linear model.
+translates to a main effect \texttt{gp} in the log-linear model.
 Additionally, there may be different values for $m_a$ and $m_{aa}$ in
 the different populations.
 
@@ -140,12 +176,11 @@ interactions contribute, in the present version of the code, to the
 residual.  Try
 \begin{Schunk}
 \begin{Sinput}
-> data(mendelABC)
 > hwde(data = mendelABC, loci = c("seedshape", "cotylcolor", "coatcolor"))
 \end{Sinput}
 \end{Schunk}
 
-\section*{The use of \texttt{hwde()}}
+\section{Details of Use of \texttt{hwde()}}
 
 First recall the simple example that was described above.  The data
 were entered, from the keyboard, into a data frame \texttt{hwdat} that
@@ -178,8 +213,13 @@ is \texttt{Population}.
 
 \subsubsection*{Example -- two populations and two loci}
 With this introduction, we move directly to data, with two populations
-and two loci, that are suited to fitting all the parameters that the function
-currently allows.  Data (Mourant et al, 1976) are:
+and two loci, that are suited to fitting all the parameters that the
+function currently allows, i.e., $m_{aa}$, $m_{bb}$, $m_{cc}$,
+$s_{ab}$, $s_{ac}$, $s_{bc}$, $q_{ab}$, $q_{ac}$, $q_{bc}$,
+$m_{abb}$, $m_{acc}$, $m_{bcc}$,
+$m_{aab}$, $m_{aac}$, $m_{bbc}$.
+
+Data (Mourant et al, 1976) are:
 \begin{verbatim}
    Population locus1 locus2 Observed
      Indian     MM     SS       91
@@ -215,19 +255,19 @@ we can read in the data and do the analysis thus:
 \end{Sinput}
 \begin{Soutput}
 [1] "Analysis of Deviance Table"
-   Resid. Df Resid. Dev Df Deviance
-1         17    1724.07            
-2         16    1090.41  1   633.66
-3         14     486.72  2   603.69
-4         12     480.31  2     6.41
-5         11     463.76  1    16.55
-6         10     218.42  1   245.34
-7          8     217.15  2     1.28
-8          6      37.94  2   179.21
-9          4      35.46  2     2.48
-10         3      26.29  1     9.16
-11         2       5.94  1    20.36
-12         0  2.176e-14  2     5.94
+              Resid. Df Resid. Dev Df Deviance
+1                    17    1724.07            
++gp                  16    1090.41  1   633.66
++(a+b)               14     486.72  2   603.69
++(aa+bb)             12     480.31  2     6.41
++sab                 11     463.76  1    16.55
++qab                 10     218.42  1   245.34
++(abb+aab)            8     217.15  2     1.28
++gp:(a+b)             6      37.94  2   179.21
++gp:(aa+bb)           4      35.46  2     2.48
++gp:sab               3      26.29  1     9.16
++gp:qab               2       5.94  1    20.36
++gp:(abb+aab)         0  4.663e-15  2     5.94
 \end{Soutput}
 \end{Schunk}
 
@@ -245,7 +285,53 @@ difference from the last previous Residual Deviance term that is
 marked with an \texttt{r} (= reference) as the first character in the
 row in which it appears.
 
-\section*{Obtaining Additional Output}
+The estimates of parameters in the maximal (or, with appropriate modification, any
+other) model can be extracted thus:
+\begin{Schunk}
+\begin{Sinput}
+> II.hwde <- hwde(data = mendelABC, loci = c("seedshape", "cotylcolor", 
++     "coatcolor"), keep.models = T)
+\end{Sinput}
+\begin{Soutput}
+[1] "Analysis of Deviance Table"
+                           Resid. Df Resid. Dev Df Deviance
+1                                 26    210.254            
++(a+b+c)                          23    137.281  3   72.973
++(aa+bb+cc)                       20    115.573  3   21.708
++(sab+sac+sbc)                    17    105.059  3   10.514
++(qab+qac+qbc)                    14     55.494  3   49.565
++(abb+acc+bcc+aab+aac+bbc)         8     10.789  6   44.705
+\end{Soutput}
+\begin{Sinput}
+> models <- II.hwde$models
+> maxmodel <- models[[length(models)]]
+> summary(maxmodel)$coef
+\end{Sinput}
+\begin{Soutput}
+                Estimate Std. Error     z value     Pr(>|z|)
+(Intercept)  1.683549334  0.2797590  6.01785643 1.767418e-09
+a            0.325993165  0.2582278  1.26242477 2.067960e-01
+b            0.813807815  0.2774041  2.93365419 3.349972e-03
+c            0.469251656  0.2918309  1.60795759 1.078445e-01
+aa          -1.028403908  0.4521094 -2.27467929 2.292518e-02
+bb          -0.885063427  0.4105598 -2.15574771 3.110337e-02
+cc           1.148348950  0.4152134  2.76568396 5.680356e-03
+sab         -0.366288148  0.2135609 -1.71514616 8.631843e-02
+sac         -0.071914559  0.2364631 -0.30412597 7.610319e-01
+sbc         -0.620736851  0.2696044 -2.30239907 2.131268e-02
+qab         -0.439121685  0.3317499 -1.32365261 1.856184e-01
+qac         -0.579313263  0.3521036 -1.64529222 9.990956e-02
+qbc         -0.876931995  0.3949857 -2.22016153 2.640780e-02
+abb          0.009330965  0.2136682  0.04367035 9.651672e-01
+acc         -0.926198223  0.2178926 -4.25071022 2.130937e-05
+bcc         -0.031865444  0.2267383 -0.14053840 8.882346e-01
+aab          0.570390292  0.2256474  2.52779494 1.147814e-02
+aac          0.843177772  0.2249129  3.74890848 1.776059e-04
+bbc          0.380047882  0.2154273  1.76415833 7.770533e-02
+\end{Soutput}
+\end{Schunk}
+
+\section{Obtaining Additional Output}
 By default, the function returns (invisibly) a list with two elements.
 The first holds the analysis of variance table.  The second holds the
 data and contrast terms that are required for fitting tbe various
@@ -256,10 +342,10 @@ models.  For example:
 \end{Sinput}
 \begin{Soutput}
 [1] "Analysis of Deviance Table"
-  Resid. Df Resid. Dev Df Deviance
-1         2    149.353            
-2         1      2.044  1  147.309
-3         0  7.327e-15  1    2.044
+    Resid. Df Resid. Dev Df Deviance
+1           2    149.353            
++a          1      2.044  1  147.309
++aa         0  8.216e-15  1    2.044
 \end{Soutput}
 \begin{Sinput}
 > names(hwdat)
@@ -343,10 +429,10 @@ action with the data frame \texttt{hwdat} is equivalent to:
 \end{Sinput}
 \begin{Soutput}
 [1] "Analysis of Deviance Table"
-  Resid. Df Resid. Dev Df Deviance
-1         2    149.353            
-2         1      2.044  1  147.309
-3         0  7.327e-15  1    2.044
+    Resid. Df Resid. Dev Df Deviance
+1           2    149.353            
++a          1      2.044  1  147.309
++aa         0  8.216e-15  1    2.044
 \end{Soutput}
 \end{Schunk}
 In \texttt{refmodel}, 1 refers to the model that has constant term only.
@@ -360,13 +446,13 @@ by setting:
 \end{Sinput}
 \begin{Soutput}
 [1] "Analysis of Deviance Table"
-  Resid. Df Resid. Dev Df Deviance
-1        17    1724.07            
-2        16    1090.41  1   633.66
-3        15     853.73  1   236.68
-4        15     723.40  1   367.02
-5        14     486.72  2   603.69
-6        13     485.59  1     1.13
+     Resid. Df Resid. Dev Df Deviance
+1           17    1724.07            
++gp         16    1090.41  1   633.66
++a          15     853.73  1   236.68
++b          15     723.40  1   367.02
++a+b        14     486.72  2   603.69
++aa         13     485.59  1     1.13
 \end{Soutput}
 \end{Schunk}
 
@@ -381,10 +467,10 @@ list that is returned by the function.  For example:
 \end{Sinput}
 \begin{Soutput}
 [1] "Analysis of Deviance Table"
-  Resid. Df Resid. Dev Df Deviance
-1         2    149.353            
-2         1      2.044  1  147.309
-3         0  7.327e-15  1    2.044
+    Resid. Df Resid. Dev Df Deviance
+1           2    149.353            
++a          1      2.044  1  147.309
++aa         0  8.216e-15  1    2.044
 \end{Soutput}
 \begin{Sinput}
 > hwdat.hw$models[[2]]
@@ -416,7 +502,14 @@ deviance residuals as the default.  For the \texttt{IndianIrish}
 data there are, with the parameter setting \texttt{group.terms=FALSE}, 
 24 models from which to choose.  Choose carefully!
 
-\section*{References}
+\section{Exact Hardy-Weinberg Test}
+The function \texttt{hwexact()}, supplied by Randall Johnson, does an
+exact test for Hardy-Weinberg equilibrium, conditional on the observed
+relative numbers of the two alleles.  The only case implemented is for
+a single population and single locus.  The algorithm is described in
+Wigginton et al (2005).
+
+\section{References}
 \begin{itemize}
 \item[] Huttley, G.A. and Wilson, S.R. 2000. Testing for concordant
 equilibria between population samples.  Genetics 156: 2127-2135.
@@ -426,6 +519,9 @@ Oxford University Press.
 \item[] Weir, B.S. 1996.  \textit{Genetic Data Analysis II.} Sinauer.
 \item[] Weir, B.S. and Wilson, S.R. 1986.  Log-linear models for
 linked loci. Biometrics 42:665-670.
+\item[] Wigginton, J.E., Cutler, D.J. and Abecasis, G.R. 2000. A note on
+  exact tests of Hardy-Weinberg equilibrium. \textit{American Journal of Human
+  Genetics} 76: 887-893.
 \end{itemize}
 
 \end{document}
