@@ -9,14 +9,15 @@
 
 \begin{document}
 \author{John Maindonald\\
-{\small Centre for Bioinformation Science, Australian National University, Canberra, Australia}}
+{\small Centre for Mathematics and Its Applications, Australian National 
+University, Canberra, Australia}}
 \date{}
 \maketitle
 
 \keywords{population genetics, Hardy-Weinberg, genotype, allele,
 genotypic disequilibrium}
 
-\section*{Introduction}
+\section{Introduction}
 
 In a diploid, sexually reproducing species, at a locus where there are
 two alleles $A$ and $a$, the possible genotypes are $AA$, $Aa$ and
@@ -24,12 +25,12 @@ $aa$.  In a population of size $N$, with $p$ the frequency of the A
 allele and $q$ the frequency of the a allele, the expected numbers
 under Hardy-Weinberg equilibrium are $NP_{AA} = Np^2$ for the $AA$
 genotype, $NP_{Aa} = 2Npq$ for the $Aa$ genotype, and $NP_{aa} = Nq^2$
-for the $aa$ genotype.  Writing $m$ = $\log(Np^2)$ and $\log(p/q) =
+for the $aa$ genotype.  Writing $m$ = $\log(Np^2)$ and $\log(q/p) =
 m_a$, the logarithms of the frequencies may be written:
 \begin{eqnarray}
-\log(Np²)  =&  m \\
-\log(2Npq) =&  m + \log(2) + m_a\\
-\log(Nq²)  =&  m + 2 m_a
+\log(Np^{2})  &=&  m \\
+\log(2Npq) &=&  m + \log(2) + m_a\\
+\log(Nq^{2})  &=&  m + 2 m_a
 \end{eqnarray}
 Thus the model is loglinear, and can be fitted as a generalized linear
 model with poisson error and offset $\log(2)$ for the heterozygote.
@@ -55,20 +56,33 @@ Now call the function.
 <<echo=TRUE>>=
 library(hwde)
 hwde(data=hwdat)
-@ 
-We leave till later detailed information on the use of \texttt{hwde()},
-including details on how to obtain fitted values, residuals and 
-parameter estimates. 
+@ %
 The disequilibrium term has the form
-\[ m_{aa} = \log \frac{4 P_{AA} P_{aa}}{P_{Aa}²}
+\[ m_{aa} = \log \frac{4 P_{AA} P_{aa}}{P_{Aa}^²}
 \]
 Notice that the parameters $m_a$ and $m_{aa}$ have been abbreviated,
-in the computer output, to $a$ and $aa$ respectively.
+in the computer output, to $a$ and $aa$ respectively. The parameter
+$m$ models the reference or baseline level, and is estimated by the
+intercept term.
+
+To obtain estimates of parameters, including the disequilibrium parameter $m_{aa}$,
+one can to the following:
+<<maa, echo=TRUE>>=
+data.df <- hwde(data = hwdat)$data.df
+names(data.df)
+summary(glm(obs ~ a + aa, offset=oset, family=poisson, data=data.df))$coef
+@ %
+Note again that the intercept estimates $m$, and that $aa$ is the 
+
+We leave till later detailed information on the use of \texttt{hwde()},
+including details on how to obtain fitted values and residuals. 
+
+\subsection{Several different populations}
 
 If there several different populations, there must be a parameter
 (by default assumed to have the name \texttt{Population}),
 that accounts for different population sizes.  In the code, this
-translates into a main effect \texttt{gp} in the log-linear model.
+translates to a main effect \texttt{gp} in the log-linear model.
 Additionally, there may be different values for $m_a$ and $m_{aa}$ in
 the different populations.
 
@@ -106,11 +120,10 @@ Terms that correspond to second (or, with $>$ 3 loci, higher order)
 interactions contribute, in the present version of the code, to the
 residual.  Try
 <<echo=true,eval=false>>=
-data(mendelABC)
 hwde(data=mendelABC, loci=c("seedshape","cotylcolor","coatcolor"))
 @ 
 
-\section*{The use of \texttt{hwde()}}
+\section{Details of Use of \texttt{hwde()}}
 
 First recall the simple example that was described above.  The data
 were entered, from the keyboard, into a data frame \texttt{hwdat} that
@@ -141,8 +154,13 @@ is \texttt{Population}.
 
 \subsubsection*{Example -- two populations and two loci}
 With this introduction, we move directly to data, with two populations
-and two loci, that are suited to fitting all the parameters that the function
-currently allows.  Data (Mourant et al, 1976) are:
+and two loci, that are suited to fitting all the parameters that the
+function currently allows, i.e., $m_{aa}$, $m_{bb}$, $m_{cc}$,
+$s_{ab}$, $s_{ac}$, $s_{bc}$, $q_{ab}$, $q_{ac}$, $q_{bc}$,
+$m_{abb}$, $m_{acc}$, $m_{bcc}$,
+$m_{aab}$, $m_{aac}$, $m_{bbc}$.
+
+Data (Mourant et al, 1976) are:
 \begin{verbatim}
    Population locus1 locus2 Observed
      Indian     MM     SS       91
@@ -170,9 +188,6 @@ we can read in the data and do the analysis thus:
 <<echo=true, eval=false>>=
 IndianIrish <- read.table("IndianIrish.txt", header=TRUE)
 @ 
-<<echo=false>>=
-data(IndianIrish)
-@ 
 <<echo=true>>=
 hwde(data=IndianIrish)
 @
@@ -189,7 +204,17 @@ difference from the last previous Residual Deviance term that is
 marked with an \texttt{r} (= reference) as the first character in the
 row in which it appears.
 
-\section*{Obtaining Additional Output}
+The estimates of parameters in the maximal (or, with appropriate modification, any
+other) model can be extracted thus:
+<<all9, echo=t>>=
+II.hwde <- hwde(data = mendelABC, loci = c("seedshape", "cotylcolor", 
+              "coatcolor"), keep.models=T)
+models <- II.hwde$models
+maxmodel <- models[[length(models)]]
+summary(maxmodel)$coef
+@ %
+
+\section{Obtaining Additional Output}
 By default, the function returns (invisibly) a list with two elements.
 The first holds the analysis of variance table.  The second holds the
 data and contrast terms that are required for fitting tbe various
@@ -252,7 +277,14 @@ deviance residuals as the default.  For the \texttt{IndianIrish}
 data there are, with the parameter setting \texttt{group.terms=FALSE}, 
 24 models from which to choose.  Choose carefully!
 
-\section*{References}
+\section{Exact Hardy-Weinberg Test}
+The function \texttt{hwexact()}, supplied by Randall Johnson, does an
+exact test for Hardy-Weinberg equilibrium, conditional on the observed
+relative numbers of the two alleles.  The only case implemented is for
+a single population and single locus.  The algorithm is described in
+Wigginton et al (2005).
+
+\section{References}
 \begin{itemize}
 \item[] Huttley, G.A. and Wilson, S.R. 2000. Testing for concordant
 equilibria between population samples.  Genetics 156: 2127-2135.
@@ -262,6 +294,9 @@ Oxford University Press.
 \item[] Weir, B.S. 1996.  \textit{Genetic Data Analysis II.} Sinauer.
 \item[] Weir, B.S. and Wilson, S.R. 1986.  Log-linear models for
 linked loci. Biometrics 42:665-670.
+\item[] Wigginton, J.E., Cutler, D.J. and Abecasis, G.R. 2000. A note on
+  exact tests of Hardy-Weinberg equilibrium. \textit{American Journal of Human
+  Genetics} 76: 887-893.
 \end{itemize}
 
 \end{document}
