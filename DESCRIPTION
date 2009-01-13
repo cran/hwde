@@ -1,9 +1,9 @@
 Package: hwde
-Version: 0.5
-Date: 2007-01-07
+Version: 0.61
+Date: 2009-01-13
 Title: Models and tests for departure from Hardy-Weinberg equilibrium and 
   independence between loci.  
-Author: J.H. Maindonald, with hwexact() from Randall Johnson. 
+Author: J.H. Maindonald, with \code{hwexact()} from Randall Johnson. 
 Maintainer: J.H. Maindonald <John.Maindonald@anu.edu.au>
 Depends: R (>= 2.0)
 Description: Fits models for genotypic disequilibria, as described in 
@@ -19,4 +19,4 @@ Copyright:  (c) Centre for Bioinformation Science, John Curtin Research
 URL: http://wwwmaths.anu.edu.au/~johnm
 LazyLoad: yes
 LazyData: yes
-Packaged: Sun Jan 21 13:27:19 2007; johnm
+Packaged: Tue Jan 13 16:42:45 2009; johnm

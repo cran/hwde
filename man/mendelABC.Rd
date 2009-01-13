@@ -31,13 +31,15 @@ Weir (1996).
 }
 \references{
   1. Fisher, R.A. 1936. Has Mendel's work been rediscovered?
-  \em{Annals of Science} \bold{1}:115-137.\cr
-  2. Mendel, G. 1886. Versuche \"{u}ber Pflanzen-Hybriden.  Verhandlugen
-  des Naturforschenden Vereines in Br\"{u}nn \bold{4}:3-47.
+  \emph{Annals of Science} \bold{1}:115-137.
+  
+  2. Mendel, G. 1886. Versuche uber Pflanzen-Hybriden.  Verhandlugen
+  des Naturforschenden Vereines in Brunn \bold{4}:3-47.
   (English translation by Royal Horticultural Society of London,
-  reprinted in Peters, J.A. 1959. \em{Classic Papers in Genetics.}
-  Prentice-Hall.\cr
-3. Weir, B.S. 1996.  \em{Genetic Data Analysis II.} Sinauer.
+  reprinted in Peters, J.A. 1959. \emph{Classic Papers in Genetics.}
+  Prentice-Hall.
+  
+3. Weir, B.S. 1996.  \emph{Genetic Data Analysis II.} Sinauer.
 }
 \examples{
 data(mendelABC)

@@ -39,7 +39,7 @@ holds the frequenceies.}
     hierarchy,
   for the anova table?}
 \item{allele.chars}{A sequence of letters used to code for the loci.
-By default \em{a}, \em{b}, \em{c}, ... are used}
+By default \emph{a}, \emph{b}, \emph{c}, ... are used}
 }
 \details{
   See the document \bold{hwde.pdf} or \bold{hwde.html} for details.
@@ -59,9 +59,9 @@ By default \em{a}, \em{b}, \em{c}, ... are used}
 \references{
   1. Huttley, G.A. and Wilson, S.R. 2000. Testing for concordant
   equilibria between population samples. \emph{Genetics} \bold{156}:2127-2135. \cr
-  2. Weir, B.S. 1996.  \em{Genetic Data Analysis II.} Sinauer.\cr
+  2. Weir, B.S. 1996.  \emph{Genetic Data Analysis II.} Sinauer.\cr
   3. Weir, B.S. and Wilson, S.R. 1986.  Log-linear models for
-linked loci. \em{Biometrics} \bold{42}:665-670.
+linked loci. \emph{Biometrics} \bold{42}:665-670.
 }
 \author{J.H. Maindonald}
 
