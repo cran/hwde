@@ -24,7 +24,6 @@ make.contrasts(data = data[, loci], allele.chars = letters)
   Any pair of letters can be used for the two alleles.  The setting
   of \code{allele.chars} determines the coding used in the model
   formulae.  This function is called by \code{hwde}}
-}
 \value{
   \item{contrasts.df}{Data frame whose columns hold the contrasts that
   will be explanatory variables for the Poisson regression model.}

@@ -28,9 +28,9 @@ Xavante Indian and Irish populations respectively
   1. Huttley, G.A. and Wilson, S.R. 2000. Testing for concordant
   equilibria between population samples. \emph{Genetics} \bold{156}, 2127-2135. \cr
   2. Mourant, A.E., Kopec, A.C. and Domaniewska-Sobczak, K. 1976.
-\em{The Distribution of the Human Blood Groups and Other Polymorphisms.}
+\emph{The Distribution of the Human Blood Groups and Other Polymorphisms.}
 Oxford University Press.\cr
-  3. Weir, B.S. 1996.  \em{Genetic Data Analysis II.} Sinauer.
+  3. Weir, B.S. 1996.  \emph{Genetic Data Analysis II.} Sinauer.
 }
 \seealso{\code{\link{hwde}}}
 
