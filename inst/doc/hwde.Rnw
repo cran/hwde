@@ -58,15 +58,15 @@ library(hwde)
 hwde(data=hwdat)
 @ %
 The disequilibrium term has the form
-\[ m_{aa} = \log \frac{4 P_{AA} P_{aa}}{P_{Aa}^²}
+\[ m_{aa} = \log \frac{4 P_{AA} P_{aa}}{P_{Aa}^2}
 \]
 Notice that the parameters $m_a$ and $m_{aa}$ have been abbreviated,
 in the computer output, to $a$ and $aa$ respectively. The parameter
 $m$ models the reference or baseline level, and is estimated by the
 intercept term.
 
-To obtain estimates of parameters, including the disequilibrium parameter $m_{aa}$,
-one can to the following:
+To obtain estimates of parameters, including the disequilibrium 
+parameter $m_{aa}$, do the following:
 <<maa, echo=TRUE>>=
 data.df <- hwde(data = hwdat)$data.df
 names(data.df)
