@@ -26,7 +26,8 @@ make.contrasts(data = data[, loci], allele.chars = letters)
   formulae.  This function is called by \code{hwde}}
 \value{
   \item{contrasts.df}{Data frame whose columns hold the contrasts that
-  will be explanatory variables for the Poisson regression model.}
+    will be explanatory variables for the Poisson regression model.}
+  \item{oset}{Offset vector for the GLM model.}
 \item{list.columns}{List in which each element is a text string
 that holds the codes for a sequence of model terms.}
 }
