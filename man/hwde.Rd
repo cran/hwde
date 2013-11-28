@@ -10,7 +10,9 @@ Fits models for genotypic disequilibria, as described in Huttley and
 Wilson (2000), Weir (1996) and Weir and Wilson (1986).
 }
 \usage{
-hwde(data = IndianIrish, gp = "Population", termlist = NULL, refmodel = NULL, loci = paste("locus", 1:(dim(data)[2] - 1), sep = ""), observed = "Observed", keep.models = FALSE, aovtable.print = TRUE, group.terms = TRUE, allele.chars = letters)
+hwde(data = IndianIrish, gp = "Population", termlist = NULL, refmodel = NULL,
+loci = paste("locus", 1:(dim(data)[2] - 1), sep = ""), observed = "Observed",
+keep.models = FALSE, aovtable.print = TRUE, group.terms = TRUE, allele.chars = letters)
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{
