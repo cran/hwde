@@ -1,5 +1,5 @@
 hwde <-
-function (data = IndianIrish, gp = "Population", termlist = NULL,
+function (data = hwde::IndianIrish, gp = "Population", termlist = NULL,
     refmodel = NULL, loci = paste("locus", 1:(dim(data)[2] -
         1), sep = ""), observed = "Observed", keep.models = FALSE,
     aovtable.print = TRUE, group.terms = TRUE, allele.chars = letters)
