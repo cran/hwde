@@ -1,7 +1,7 @@
 94d55d512a9ba36caa9b7df079bae19f *COPYING
-6fc4d9a3c9b5b8458370aa883b88f53b *DESCRIPTION
+b08f4735feb56fd995d9878916c2a63f *DESCRIPTION
 a9be61d8544ba8fb134e7c88da63ddb1 *NAMESPACE
-0ae0957f841c60a0de6c7380406ba098 *NEWS
+ff3dfca0e3389b51445ac6e331eed27a *NEWS
 58fabdd70230ce86c3b686a5e3dcf9c1 *R/decode.genotypes.R
 ecf692fa81d35fcb54da61b0e4928286 *R/hwde.R
 8934fef2a3eab1cac888f6b9ee38fa86 *R/hwexact.R
@@ -9,14 +9,14 @@ ecf692fa81d35fcb54da61b0e4928286 *R/hwde.R
 6e1403ca4fd5caccfe029c4d709d774d *R/snphwe.R
 5bdebadb939efe3e57bcf22762cf21a0 *build/vignette.rds
 4649c8766551523509000d84272a17a6 *data/IndianIrish.RData
-808f81410891aae69a56352d047b216b *data/mendelABC.RData
+c2ed0155dfb79d80806f76b36761dfe9 *data/mendelABC.RData
 676ab650eb8b971ac92ea94c644e4102 *inst/doc/IndianIrish.txt
 bbe6abb1129356948abd9e63bb9c4883 *inst/doc/hw.txt
 0c4c3c5f8dbb26cc0e01df0bcc6d6e9a *inst/doc/hwde.R
 8eeae2813bdc827a95e13cde01170908 *inst/doc/hwde.Rnw
 e8c0b56773a6b25db897c1b9687e4005 *inst/doc/hwde.pdf
 6a693dbff2b2a75f08d7df773c3782a2 *man/IndianIrish.Rd
-14717374620a20bf5fbbb7243c588a48 *man/MendelABC.Rd
+5a731428c5622c004a8d280534a1cd92 *man/MendelABC.Rd
 d148658bedac2b601fd533de9aa66abf *man/decode.genotypes.Rd
 3ace268771c4a1684c1a0465d6d51895 *man/hwde.Rd
 7d3273da4032d684f668d2bcf5e08f15 *man/hwexact.Rd

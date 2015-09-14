@@ -1,3 +1,12 @@
+                  Changes in hwde version 0.66
+
+CORRECTIONS TO DATA
+
+    o Data in the dataset mendelABC was in error.  Substantial corrections 
+      have been made.  (Thanks to Boris Igic for drawing the errrors to 
+      our attention.)
+
+
                   Changes in hwde version 0.63
 
 CHANGES

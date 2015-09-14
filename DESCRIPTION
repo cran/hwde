@@ -1,6 +1,6 @@
 Package: hwde
-Version: 0.65
-Date: 2015-08-06
+Version: 0.66
+Date: 2015-09-14
 Title: Models and Tests for Departure from Hardy-Weinberg Equilibrium
         and Independence Between Loci
 Author: John Maindonald, with \code{hwexact()} from Randall Johnson.
@@ -19,6 +19,6 @@ URL: http://maths-people.anu.edu.au/~johnm
 LazyLoad: yes
 LazyData: yes
 NeedsCompilation: no
-Packaged: 2015-08-06 03:39:03 UTC; johnm1
+Packaged: 2015-09-14 04:08:31 UTC; johnm1
 Repository: CRAN
-Date/Publication: 2015-08-06 07:15:54
+Date/Publication: 2015-09-14 09:12:49
