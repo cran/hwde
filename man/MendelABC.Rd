@@ -46,9 +46,7 @@ Weir (1996).
 }
 \examples{
 ## Lay table out as a 3D array, as in Fisher (1936)
-abc <- aperm(array(mendelABC[,4], dim=c(3,3,3), 
-                   dimnames=c("B","C","A")), 
-             c(1,3,2))
+abc <- aperm(array(mendelABC[,4], dim=c(3,3,3)), c(1,3,2))
 dimnames(abc) <- list(B=c('BB','Bb','bb'), 
                       A=c('AA','Aa','aa'),
                       C=c('CC','Cc','cc'))
